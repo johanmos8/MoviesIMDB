@@ -29,10 +29,17 @@
         android:id="@+id/playFragment"
         android:name="com.example.movies.presentation.ui.home.play.PlayFragment"
         android:label="fragment_play"
-        tools:layout="@layout/fragment_play" />
+        tools:layout="@layout/fragment_play" >
+
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.movies.presentation.ui.home.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+
+        <action
+            android:id="@+id/action_searchFragment_to_playFragment"
+            app:destination="@id/playFragment" />
+    </fragment>
 </navigation>

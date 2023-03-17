@@ -11,7 +11,7 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/parent_movie_list"
+        android:id="@+id/parent_popular_movie_list"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"

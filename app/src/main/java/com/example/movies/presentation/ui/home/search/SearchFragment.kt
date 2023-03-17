@@ -1,15 +1,20 @@
 package com.example.movies.presentation.ui.home.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.movies.R
 import com.example.movies.databinding.FragmentSearchBinding
 import com.example.movies.domain.models.Movie
 import com.example.movies.presentation.ui.home.HomeViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -18,7 +23,6 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val sharedViewModel: HomeViewModel by viewModel()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +70,16 @@ class SearchFragment : Fragment() {
     fun loadRecyclerView(movies: List<Movie>) {
         binding.lifecycleOwner = this
         binding.viewModel = sharedViewModel
-        binding.foundMoviesList.adapter = MovieAdapter(movies)
+        val movieAdapter = MovieAdapter(movies)
+        binding.foundMoviesList.adapter = movieAdapter
+        movieAdapter.addListener(object : MovieAdapter.Listener {
+            override fun itemClicked(movie: Movie) {
+                sharedViewModel._movieSelected = movie
+                findNavController().navigate(
+                    R.id.action_searchFragment_to_playFragment
+                )
+            }
+        })
+
     }
 }

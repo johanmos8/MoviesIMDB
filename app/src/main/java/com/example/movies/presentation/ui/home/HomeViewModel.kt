@@ -31,6 +31,11 @@ class HomeViewModel(
     private val _movie = MutableLiveData<Movie>()
     val movie: LiveData<Movie> = _movie
 
+    //TODO("revisar buenas practicas")
+    //Definition of movieselected when the user clicks the list.
+    lateinit var _movieSelected: Movie
+    val movieSelected get() = _movieSelected!!
+
     // Create a MutableLiveData to hold the search query
     var _searchQuery = MutableLiveData<String>()
     val searchQuery: LiveData<String> = _searchQuery

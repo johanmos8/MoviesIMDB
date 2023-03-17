@@ -22,14 +22,34 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     private val binding get() = _binding!!
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.frameLayout) as NavHostFragment
-        navController = navHostFragment.navController
         setActivityView()
+        setNavController()
         setFragment(HomeFragment())
+        setUpView()
+
+    }
+
+    private fun setActivityView() {
+        _binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun setFragment(fragment: Fragment) {
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.commit()
+    }
+
+    private fun setNavController() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navController = navHostFragment.navController
+    }
+
+    private fun setUpView() {
         binding.navBar.setOnItemSelectedListener {
             val fragment = when (it.itemId) {
                 R.id.home -> HomeFragment()
@@ -42,18 +62,6 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
             setFragment(fragment)
             true
         }
-    }
-
-    private fun setActivityView() {
-        _binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
-    private fun setFragment(fragment: Fragment) {
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
-        fragmentTransaction.commit()
     }
 
 

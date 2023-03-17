@@ -11,8 +11,10 @@ class MovieAdapter(
     private val dataset: List<Movie>
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    class MovieViewHolder(private val binding: ItemListBinding) :
+    private var listener: Listener? = null
+    inner class MovieViewHolder(private val binding: ItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
 
 
         fun bind(movie: Movie) {
@@ -23,9 +25,18 @@ class MovieAdapter(
             Picasso.get()
                 .load("https://image.tmdb.org/t/p/original${movie.posterPath}")
                 .into(binding.movieImage)
+            // SetUp Listener
+            binding.parentMovieList.setOnClickListener {
+                listener?.itemClicked(movie)
+            }
         }
     }
-
+    interface Listener {
+        fun itemClicked(movie: Movie)
+    }
+    fun addListener(newListener: Listener) {
+        this.listener = newListener
+    }
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
@@ -54,4 +65,5 @@ class MovieAdapter(
         holder.bind(item)
 
     }
+
 }
