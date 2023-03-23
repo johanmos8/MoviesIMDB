@@ -1,6 +1,7 @@
 package com.example.movies.presentation.ui.home.play
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ class PlayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("CheckingBottom","play")
         _binding = FragmentPlayBinding.inflate(inflater, container, false)
         return binding.root
     }

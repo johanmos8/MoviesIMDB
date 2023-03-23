@@ -6,12 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movies.domain.models.Movie
+import com.example.movies.domain.useCases.GetPopularMoviesUseCase
 import com.example.movies.domain.useCases.MovieUseCase
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 
 class HomeViewModel(
-    private val movieUseCase: MovieUseCase
+    private val movieUseCase: MovieUseCase,
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<String>()
@@ -33,7 +38,7 @@ class HomeViewModel(
 
     //TODO("revisar buenas practicas")
     //Definition of movieselected when the user clicks the list.
-    lateinit var _movieSelected: Movie
+    var _movieSelected: Movie=Movie(1,"sa","a",0.0,"/","s",false,0.0)
     val movieSelected get() = _movieSelected!!
 
     // Create a MutableLiveData to hold the search query
@@ -58,8 +63,12 @@ class HomeViewModel(
      * Get a list of popular movies
      */
     fun getPopularMovies() {
-        viewModelScope.launch {
-            _popularMovies.value = movieUseCase.getPopularMovies()
+        viewModelScope.launch(Dispatchers.IO) {
+            val movies = getPopularMoviesUseCase.execute(Unit)
+            withContext(Dispatchers.Main) {
+                _popularMovies.value = movies
+            }
+
         }
     }
 

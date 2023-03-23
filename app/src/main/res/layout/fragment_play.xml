@@ -5,9 +5,7 @@
 
     <data>
 
-        <variable
-            name="viewmodel"
-            type="com.example.movies.presentation.ui.home.HomeViewModel" />
+
         <variable
             name="movie"
             type="com.example.movies.domain.models.Movie" />
