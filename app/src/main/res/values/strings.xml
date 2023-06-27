@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="url_base_image"></string>
+    <string name="add_track_list">Agregar a mi lista de seguimiento</string>
+    <string name="episodes_guide">Guìa de episodios</string>
+</resources>
